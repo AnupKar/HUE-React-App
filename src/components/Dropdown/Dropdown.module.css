@@ -1,0 +1,64 @@
+.dropdown {
+    position: relative;
+}
+
+.dropdown div:first-child {
+    background: #fff;
+    color: #007eff;
+    padding: 0.5rem;
+    border: 1px solid #007eff;
+    border-radius: .5rem;
+    margin-right: 1rem;
+    width: 9rem;
+    height: 2.5rem;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+    transition: all .4 ease-in;
+}
+
+.dropdown div:first-child :active {
+    scale: .9;
+}
+
+.dropdown div:first-child  p {
+    font-size: .8rem;
+    padding-left: .5rem;
+}
+
+.dropdown div:first-child  svg {
+    margin-right: .5rem;
+}
+
+.menuItems {
+    position: absolute;
+    background: #fff;
+    width: 13rem;
+
+    margin-top: .5rem;
+    border-radius: .5rem;
+}
+
+.menuItems p {
+    color: #52575C;
+    padding: .5rem 0 .5rem .5rem;
+    font-size: .7rem;
+    cursor: pointer;
+}
+
+.menuItems p:hover {
+    color: #007eff;
+    background: #f4f9ff;
+    border-radius: .5rem;
+}
+
+.menuItems p:first-child {
+    margin-top: .5rem;
+}
+
+.menuItems p:last-child {
+    margin-bottom: .5rem;
+}

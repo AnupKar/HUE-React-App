@@ -1,0 +1,29 @@
+.mainContainer {
+  display: flex;
+  height: 100%;
+  margin: 2.5rem 3rem;
+}
+
+.leftContainer {
+  flex: 3;
+}
+
+.rightContainer {
+  flex: 1;
+}
+
+.bottomHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.currentTab {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.mainContent {
+  margin-left: 0.2rem;
+  margin-top: 1rem;
+}

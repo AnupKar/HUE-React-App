@@ -1,0 +1,35 @@
+.Navbar_main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.Navbar_main div:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.Navbar_main div {
+    background: #fff;
+    border-bottom: 3px solid #A0A4A8;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+}
+
+.Navbar_main div:hover {
+    transform: scale(1.05);
+}
+
+.Navbar_main div:active {
+    transform: scale(0.8);
+}
+
+.Navbar_main div p {
+    padding: .7rem .4rem;
+    font-weight: 600;
+}
+
+.selected {
+    background: #007EFF !important;
+    border: none !important;
+    color: #fff;
+}

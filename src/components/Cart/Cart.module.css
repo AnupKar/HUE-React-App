@@ -1,0 +1,51 @@
+.cartContainer {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  margin-left: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px 1px rgba(0, 0, 0, 0.3);
+
+  min-height: 15rem;
+}
+
+.cartContainer h3 {
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
+}
+
+.items {
+  min-height: 7rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item p {
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 0.3rem;
+}
+
+.total p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  letter-spacing: 1px;
+}
+
+.total p span {
+  font-size: 1.4rem;
+  padding: 0 0.2rem;
+}
+
