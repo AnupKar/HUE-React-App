@@ -2,11 +2,12 @@ import { useState, useContext } from 'react';
 import { HvcContext } from '../../context';
 
 import styles from './Card.module.css';
-
+import { useNavigate } from 'react-router-dom';
 export const Card = ({ image }) => {
   const [selected, setSelected] = useState(false);
   const [selectedBit, setSelectedBit] = useState(null);
-  const { region, handleSetImages } = useContext(HvcContext);
+  const { region, handleSetImages, handleNavChange } = useContext(HvcContext);
+  const navigate = useNavigate()
 
   const handleSelection = () => {
     setSelected(prev => !prev);
@@ -18,6 +19,8 @@ export const Card = ({ image }) => {
       bit: selectedBit || image.bit[0]
     }
     handleSetImages(selectImgBit);
+    handleNavChange(2);
+    navigate('/instance');
   };
 
   const changeBit = (bit) => {

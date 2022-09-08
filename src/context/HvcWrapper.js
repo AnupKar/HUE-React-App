@@ -25,6 +25,41 @@ export const HvcProvider = ({ children }) => {
     } else setImages((prev) => [image, ...prev]);
   };
 
+  const handleSetInstance = (data, type) => {
+    const item = images.filter((each) => each.name.toLowerCase() === type.toLowerCase());
+
+    console.log("type", type);
+
+    console.log('item', item);
+
+    if (item.length > 0) {
+      const dataIndx = images.findIndex((each) => each.id === item[0].id);
+      const newData = [...images];
+      if (dataIndx > -1) {
+        newData.splice(dataIndx, 1);
+        newData.push({
+          id: data.id,
+          name: type === 'cpu' ? 'Cpu' : 'Memory',
+          bit: {
+            name: data.name,
+            price: data.price,
+          },
+        });
+        setImages(newData);
+      }
+    } else {
+      const newData = {
+        id: data.id,
+        name: type === 'cpu' ? 'Cpu' : 'Memory',
+        bit: {
+          name: data.name,
+          price: data.price,
+        },
+      };
+      setImages((prev) => [...prev, newData]);
+    }
+  };
+
   return (
     <HvcContext.Provider
       value={{
@@ -34,6 +69,7 @@ export const HvcProvider = ({ children }) => {
         handleSelectRegion,
         images,
         handleSetImages,
+        handleSetInstance,
       }}
     >
       {children}

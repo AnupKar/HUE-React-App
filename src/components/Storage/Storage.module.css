@@ -1,0 +1,62 @@
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px 1px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+
+  gap: 2rem;
+}
+
+.wrapper:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.wrapper > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper > div > p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.wrapper > div p {
+  font-size: 0.8rem;
+}
+
+.wrapper input {
+  outline: none;
+  border-radius: 0.2rem;
+  border: 1px solid #c4c4c4;
+  width: 8rem;
+}
+
+.wrapper input:checked {
+  width: 0.8rem;
+  height: 0.8rem;
+  appearance: none;
+  background-color: #007eff;
+  border-radius: 2px;
+}
+
+.otherStroages {
+    display: flex;
+    align-items: center;
+}
+
+.otherStroages button {
+    height: 2.5rem;
+    padding: .5rem 2rem;
+    outline: none;
+    cursor: pointer;
+}
