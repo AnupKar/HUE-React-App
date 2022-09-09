@@ -50,8 +50,8 @@ export const Instance = () => {
             <p className={styles.text_style}>{dropdownList[selectionId].name}</p>
           </div>
           <div className={`${styles.Instance_type} ${styles.instance_dropdown}`}>
-            <Dropdown placeholder="Cpu Cores" data={dropdownList[selectionId].cpu} onSelect={handleChooseCPU} />
-            <Dropdown placeholder="Memory" data={dropdownList[selectionId].memory} onSelect={handleChooseMemory} />
+            <Dropdown placeholder="Cpu Cores" data={dropdownList[selectionId].cpu} onSelect={handleChooseCPU} width='140px' height='35px'/>
+            <Dropdown placeholder="Memory" data={dropdownList[selectionId].memory} onSelect={handleChooseMemory} width='140px' height='35px'/>
           </div>
           <div className={styles.Button_main}>
             <div className={styles.btn_back}>

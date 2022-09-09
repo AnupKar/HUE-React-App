@@ -11,7 +11,7 @@ export const Home = () => {
   const { navId, handleSelectRegion } = useContext(HvcContext);
 
   const handleRegionSelect = (index) => {
-    handleSelectRegion(options[index].name);
+    handleSelectRegion(RegionOptions[index].name);
   } 
 
   return (

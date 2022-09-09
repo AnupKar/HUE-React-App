@@ -17,7 +17,7 @@ export const options = [
   {
     id: 4,
     name: 'Configure Security',
-    link: '/card'
+    link: '/security'
   },
   {
     id: 5,

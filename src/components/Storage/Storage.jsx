@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styles from './Storage.module.css';
 import { Dropdown } from '../Dropdown/Dropdown';
+import { HvcContext } from '../../context';
 
 import { storageData } from './data';
 
-const Card = ({isBackup = false}) => {
+const Card = ({ isBackup = false, isExt = false, card_id }) => {
+  const { handleStorage } = useContext(HvcContext);
   const [IOPS, setIOPS] = useState(100);
   const [capacity, setCapacity] = useState({
     min: 0,
@@ -13,6 +15,7 @@ const Card = ({isBackup = false}) => {
   });
   const [encryption, setEncryption] = useState(true);
   const [backup, setBackup] = useState(isBackup || false);
+  const [storageType, setStorageType] = useState(null);
 
   useEffect(() => {
     if (capacity.value < 100) {
@@ -25,6 +28,12 @@ const Card = ({isBackup = false}) => {
   }, [capacity.value]);
 
   const handleStroageSelect = (id) => {
+    setStorageType(storageData[id]);
+
+    if(capacity.value) {
+      handleStorage(storageData[id], capacity, card_id, isExt);
+    }
+
     if (id === 0) {
       setCapacity({ ...capacity, min: 20, max: 512 });
       return;
@@ -39,14 +48,20 @@ const Card = ({isBackup = false}) => {
       <div>
         <p>Type</p>
         <div className={styles.type}>
-          <Dropdown placeholder="Stroage" data={storageData} onSelect={handleStroageSelect} />
+          <Dropdown
+            placeholder="Stroage"
+            data={storageData}
+            onSelect={handleStroageSelect}
+            width="140px"
+            height="30px"
+          />
         </div>
       </div>
 
       <div className={styles.volume}>
         <p>Volume</p>
         <div>
-          <p>Root</p>
+          <p>{!isExt ? "Root" : "Ext"}</p>
         </div>
       </div>
 
@@ -61,12 +76,15 @@ const Card = ({isBackup = false}) => {
               if (val) setCapacity({ ...capacity, value: parseInt(e.target.value, 10) });
               else setCapacity('');
             }}
-            disabled={capacity.min == 0 && capacity.max == 0}
+            disabled={capacity.min === 0 && capacity.max === 0}
             onBlur={() => {
               if (capacity.value < capacity.min || capacity.value > capacity.max) {
                 alert(`Min storage is ${capacity.min}, and maximum storage is ${capacity.max}.`);
                 setCapacity({ ...capacity, value: '' });
+                return;
               }
+              // add this to cart item
+              handleStorage(storageType, capacity, card_id, isExt);
             }}
           />
         </div>
@@ -105,7 +123,7 @@ const Card = ({isBackup = false}) => {
 
 export const Storage = () => {
   const [addStorage, setStorage] = useState([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const handleAddStroage = () => {
     setStorage((prev) => [...prev, count]);
@@ -120,14 +138,14 @@ export const Storage = () => {
 
   return (
     <div>
-      <Card isBackup={true} />
+      <Card isBackup={true} isExt={false} card_id={0} />
 
       {addStorage !== null &&
         addStorage.map((each, index) => {
           return (
             <div className={styles.otherStroages} key={each}>
-              <Card />
-              <button onClick={() => removeStroage(index)}>Cancel</button>
+              <Card isExt={true} card_id={each} />
+              <button onClick={() => removeStroage(index )}>Cancel</button>
             </div>
           );
         })}

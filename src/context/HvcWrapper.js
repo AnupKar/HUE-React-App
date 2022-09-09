@@ -16,6 +16,7 @@ export const HvcProvider = ({ children }) => {
     selectedRegion(region);
   };
 
+  // used to manage cart items for tab1.
   const handleSetImages = (image) => {
     const isFound = images.filter((each) => each.id === image.id);
     if (isFound.length > 0) {
@@ -27,10 +28,6 @@ export const HvcProvider = ({ children }) => {
 
   const handleSetInstance = (data, type) => {
     const item = images.filter((each) => each.name.toLowerCase() === type.toLowerCase());
-
-    console.log("type", type);
-
-    console.log('item', item);
 
     if (item.length > 0) {
       const dataIndx = images.findIndex((each) => each.id === item[0].id);
@@ -60,6 +57,34 @@ export const HvcProvider = ({ children }) => {
     }
   };
 
+  const handleStorage = (storageType, capacity, id, isExt) => {
+    const indx = images.findIndex((each) => each?.id === id);
+
+    if (indx > -1) {
+      const newData = [...images];
+      newData.splice(indx, 1);
+      setImages(newData);
+    }
+
+    let extraPrice = 0;
+    if (storageType.name === 'SSD') {
+      extraPrice = 40;
+    }
+    if (storageType.name === 'Magnetic Disks') {
+      extraPrice = 20;
+    }
+
+    const item = {
+      id: id,
+      name: storageType.name,
+      bit: {
+        name: `${capacity.value} GB`,
+        price: !isExt ? Math.round(capacity.value * storageType.price, 2) : extraPrice,
+      },
+    };
+    setImages((prev) => [...prev, item]);
+  };
+
   return (
     <HvcContext.Provider
       value={{
@@ -70,6 +95,7 @@ export const HvcProvider = ({ children }) => {
         images,
         handleSetImages,
         handleSetInstance,
+        handleStorage,
       }}
     >
       {children}

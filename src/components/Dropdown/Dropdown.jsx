@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import styles from './Dropdown.module.css';
 import { ReactComponent as DropDownIcon } from '../../asset/dropdown.svg';
 
-export const Dropdown = ({placeholder, data, onSelect}) => {
+export const Dropdown = ({placeholder, data, onSelect, height, width, isDefault = null}) => {
   const [showDrop, setDrop] = useState(false);
   const [selectedIdx, setIndex] = useState(null);
   const toggleDrop = () => {
@@ -21,13 +21,13 @@ export const Dropdown = ({placeholder, data, onSelect}) => {
   }, [data]); 
 
   return (
-    <div className={styles.dropdown}>
-      <div onClick={toggleDrop}>
-        <p>{selectedIdx === null ? placeholder : data[selectedIdx].name}</p>
+    <div className={styles.dropdown} >
+      <div style={(width && height) && {width:width,height:height}} onClick={toggleDrop}>
+        <p>{isDefault ? isDefault : selectedIdx === null ? placeholder : data[selectedIdx].name}</p>
         <DropDownIcon />
       </div>
 
-      {showDrop && (
+      {!isDefault && showDrop && (
         <div className={styles.menuItems}>
           {data.map((each, index) => {
             return (
