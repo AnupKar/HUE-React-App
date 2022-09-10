@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import styles from './Storage.module.css';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { HvcContext } from '../../context';
-
+import { useNavigate } from 'react-router-dom';
 import { storageData } from './data';
 
 const Card = ({ isBackup = false, isExt = false, card_id }) => {
@@ -31,7 +31,7 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
     setStorageType(storageData[id]);
 
     if(capacity.value) {
-      handleStorage(storageData[id], capacity, card_id, isExt);
+      handleStorage(storageData[id], capacity, card_id, isExt, encryption, backup, IOPS);
     }
 
     if (id === 0) {
@@ -84,7 +84,7 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
                 return;
               }
               // add this to cart item
-              handleStorage(storageType, capacity, card_id, isExt);
+              handleStorage(storageType, capacity, card_id, isExt, encryption, backup, IOPS);
             }}
           />
         </div>
@@ -124,7 +124,8 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
 export const Storage = () => {
   const [addStorage, setStorage] = useState([]);
   const [count, setCount] = useState(1);
-
+  const { handleNavChange } = useContext(HvcContext);
+  const navigate=useNavigate()
   const handleAddStroage = () => {
     setStorage((prev) => [...prev, count]);
     setCount((prev) => prev + 1);
@@ -135,9 +136,18 @@ export const Storage = () => {
     stor.splice(count, 1);
     setStorage(stor);
   };
+  const handleNext = () => {
+    handleNavChange(4);
+    navigate('/security');
+  }
+  const handleBack = () => {
+    handleNavChange(2);
+    navigate('/instance');
+  }
 
   return (
-    <div>
+    <>
+      <div className={styles.card_main}>
       <Card isBackup={true} isExt={false} card_id={0} />
 
       {addStorage !== null &&
@@ -145,13 +155,23 @@ export const Storage = () => {
           return (
             <div className={styles.otherStroages} key={each}>
               <Card isExt={true} card_id={each} />
-              <button onClick={() => removeStroage(index )}>Cancel</button>
+              <button onClick={() => removeStroage(index )} className={styles.btn_cancel}>X</button>
             </div>
           );
         })}
-
-      <button onClick={handleAddStroage}>Add</button>
     </div>
+    <button onClick={handleAddStroage} className={styles.btn_add}>Add</button>
+        <div className={styles.Button_main}>
+          <div className={styles.btn_back} onClick={handleBack}>
+            <p>Back</p>
+          </div>
+          <div className={styles.btn} onClick={handleNext}>
+            <p>Proceed</p>
+          </div>
+        </div>
+        
+    </>
+    
   );
 };
 

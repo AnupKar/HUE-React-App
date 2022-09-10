@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from './Dropdown.module.css';
 import { ReactComponent as DropDownIcon } from '../../asset/dropdown.svg';

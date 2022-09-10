@@ -10,9 +10,9 @@ export const selectOperation = [
 ];
 
 export const networksType = [
-  { id: 1, name: 'HTTPS' },
-  { id: 3, name: 'SSH' },
-  { id: 2, name: 'SMTP' },
+  { id: 1, name: 'HTTPS', protocol: 'TCP', port: 443 },
+  { id: 3, name: 'SSH', protocol: 'TCP', port: 22 },
+  { id: 2, name: 'SMTP', protocol: 'TCP', port: 25 },
 ];
 
 export const securityData = [
@@ -21,18 +21,20 @@ export const securityData = [
     name: 'Security SG 1',
     rules: [
       {
+        id: 100,
         type: 'HTTPS',
         protocol: 'TCP',
         port: '22',
         source: '0.0.0.0',
-        remarks: "some remarks",
+        remarks: 'some remarks',
       },
       {
+        id: 200,
         type: 'SSH',
         protocol: 'TCP',
         port: '22',
         source: '0.0.0.0',
-        remarks: "some remarks",
+        remarks: 'some remarks',
       },
     ],
   },
@@ -41,11 +43,12 @@ export const securityData = [
     name: 'Security SG 2',
     rules: [
       {
+        id: 300,
         type: 'HTTPS',
         protocol: 'UDP',
         port: '443',
         source: '0.0.0.0',
-        remarks: "some remarks",
+        remarks: 'some remarks',
       },
     ],
   },
@@ -54,11 +57,12 @@ export const securityData = [
     name: 'Security SG 3',
     rules: [
       {
+        id: 400,
         type: 'SSH',
         protocol: 'UDP',
         port: '8080',
         source: '0.0.0.0',
-        remarks: "some remarks",
+        remarks: 'some remarks',
       },
     ],
   },

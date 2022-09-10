@@ -46,7 +46,9 @@
     font-weight: 600;
     font-size: 15px;
 }
-
+.Instance_card{
+    min-height: 200px;
+}
 .instance_dropdown div:first-child {
     margin-right: 3rem;
 }
@@ -85,7 +87,7 @@
     align-items: center;  
     transition: all .4s ease;
     cursor: pointer;
-    margin-top: 150px;
+    margin-top: 130px;
     margin-left: 400px;
 }
 
@@ -119,6 +121,7 @@
     margin-right: 30px;
     color: #fff;
     padding: 0.5rem 1rem;
+    padding-left: 27px!important;
     text-align: center;
     margin-top: 0.7rem;
     background-color: black;

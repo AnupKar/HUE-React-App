@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 export const HvcContext = React.createContext();
 
@@ -6,6 +6,8 @@ export const HvcProvider = ({ children }) => {
   const [navId, setNavId] = useState(1);
   const [region, selectedRegion] = useState(null);
   const [images, setImages] = useState([]);
+  const [securities, setSecurity] = useState([]);
+  const [instenceType, setInstance] = useState("");
 
   const handleNavChange = (id) => {
     if (id < 1 || id > 5) return;
@@ -35,6 +37,7 @@ export const HvcProvider = ({ children }) => {
       if (dataIndx > -1) {
         newData.splice(dataIndx, 1);
         newData.push({
+          type: "instance",
           id: data.id,
           name: type === 'cpu' ? 'Cpu' : 'Memory',
           bit: {
@@ -46,6 +49,7 @@ export const HvcProvider = ({ children }) => {
       }
     } else {
       const newData = {
+        type: "instance",
         id: data.id,
         name: type === 'cpu' ? 'Cpu' : 'Memory',
         bit: {
@@ -57,8 +61,8 @@ export const HvcProvider = ({ children }) => {
     }
   };
 
-  const handleStorage = (storageType, capacity, id, isExt) => {
-    const indx = images.findIndex((each) => each?.id === id);
+  const handleStorage = (storageType, capacity, id, isExt, encryption, backup, IOPS) => {
+    const indx = images.findIndex((each) => each?.id === id && each?.type !== "image" && each?.type !== "instance");
 
     if (indx > -1) {
       const newData = [...images];
@@ -77,13 +81,37 @@ export const HvcProvider = ({ children }) => {
     const item = {
       id: id,
       name: storageType.name,
+      isExt: isExt,
+      encryption, 
+      backup,
+      IOPS,
       bit: {
         name: `${capacity.value} GB`,
-        price: !isExt ? Math.round(capacity.value * storageType.price, 2) : extraPrice,
+        price: !isExt
+          ? Math.round(capacity.value * storageType.price, 2)
+          : Math.round(capacity.value * storageType.price, 2) + extraPrice,
       },
     };
     setImages((prev) => [...prev, item]);
   };
+
+  const addSecurity = useCallback((data) => {
+    const isPresent = securities.filter((each) => each.id === data.id);
+    if (isPresent.length) {
+      const newSecurities = securities.map((each) => (each.id === data.id ? data : each));
+      setSecurity([...newSecurities]);
+    } else {
+      setSecurity((prev) => [...prev, data]);
+    }
+  }, [securities]);
+
+  const resetSecurity = () => {
+    setSecurity([]);
+  }
+
+  // useEffect(() => {
+  //   console.log(securities);
+  // }, [securities]);
 
   return (
     <HvcContext.Provider
@@ -96,6 +124,11 @@ export const HvcProvider = ({ children }) => {
         handleSetImages,
         handleSetInstance,
         handleStorage,
+        addSecurity,
+        resetSecurity,
+        setInstance,
+        instenceType,
+        securities
       }}
     >
       {children}

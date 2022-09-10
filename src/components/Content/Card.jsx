@@ -16,7 +16,9 @@ export const Card = ({ image }) => {
     const selectImgBit = {
       id: image.id,
       name: image.name,
-      bit: selectedBit || image.bit[0]
+      bit: selectedBit || image.bit[0],
+      description: image.description,
+      type: "image"
     }
     handleSetImages(selectImgBit);
     handleNavChange(2);

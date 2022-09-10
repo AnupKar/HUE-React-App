@@ -22,6 +22,6 @@ export const options = [
   {
     id: 5,
     name: 'Review and Launch',
-    link: '/card'
+    link: '/review'
   },
 ];
