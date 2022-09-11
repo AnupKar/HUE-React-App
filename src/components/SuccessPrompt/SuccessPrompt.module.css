@@ -1,0 +1,47 @@
+.model_wrapper{
+    box-sizing: border-box;
+    position: absolute;
+    width: 510px;
+    height: 200px;
+    top:30%;
+    left:30%;
+    background: #FFFFFF;
+    border: 1px solid #A0A4A8;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    opacity: 1.5;
+}
+
+.heading{
+    width: 90%;
+    height: 36.55px;
+    padding-top: 27px;
+    padding-left: 31px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    color: #2AC769;
+}
+.heading .cancel_btn{
+    float: right;
+    color:red;
+    height: 10px;
+    width: 10px;
+    font-size: 22px;
+    cursor: pointer;
+
+}
+.content{
+    width: 619.22px;
+    height: 18.32px;
+    padding-top: 61px;
+    padding-left: 31px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
