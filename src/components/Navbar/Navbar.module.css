@@ -12,15 +12,15 @@
     background: #fff;
     border-bottom: 3px solid #A0A4A8;
     cursor: pointer;
-    transition: all .5s ease-in-out;
+    /* transition: all .5s ease-in-out; */
 }
 
 .Navbar_main div:hover {
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 
 .Navbar_main div:active {
-    transform: scale(0.8);
+    /* transform: scale(0.8); */
 }
 
 .Navbar_main div p {
@@ -28,8 +28,20 @@
     font-weight: 600;
 }
 
+.Navlink_style{
+    text-decoration: none;
+    color: black;
+}
+.Navlink_active{
+    text-decoration: none;
+    color: white;
+}
+
 .selected {
     background: #007EFF !important;
     border: none !important;
+}
+
+.selectedText {
     color: #fff;
 }

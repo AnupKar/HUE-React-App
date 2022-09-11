@@ -6,7 +6,7 @@ import { HvcContext } from '../../context';
 const calculatePrice = (images) => {
   let total = 0;
   images.forEach((image) => {
-    total += parseInt(image.bit.price, 10);
+    total += Number(image.bit.price);
   });
   return total;
 }
@@ -20,9 +20,9 @@ export const Cart = () => {
 
       <div className={styles.items}>
         {images.length > 0 &&
-          images.map((image) => {
+          images.map((image, index) => {
             return (
-              <div className={styles.item} key={image.id}>
+              <div className={styles.item} key={index}>
                 <p>{image.name} - {image.bit.name} </p>
                 <p>{image.bit.price}</p>
               </div>
