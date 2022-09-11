@@ -21,6 +21,9 @@ function App() {
 
   useEffect(() => {
     const pathName = location.pathname;
+    if(pathName === '/') {
+      navigation('/card');
+    }
     const indx = routes.findIndex((each) => each.path === pathName);
     handleNavChange(indx + 1);
   }, [location.pathname]);
