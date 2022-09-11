@@ -8,7 +8,7 @@ const calculatePrice = (images) => {
   images.forEach((image) => {
     total += Number(image.bit.price);
   });
-  return total;
+  return (Math.round(total * 100) / 100).toFixed(2);
 }
 
 export const Cart = () => {
