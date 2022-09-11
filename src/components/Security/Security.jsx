@@ -148,7 +148,7 @@ export const Security = () => {
                   })
                 : null}
 
-              <button onClick={handleAddNewSecurities}>Add Rule</button>
+              <button onClick={handleAddNewSecurities} className={styles.btn_addRule}>Add Rule</button>
             </>
           )}
           {securityState === 1 && (
@@ -175,8 +175,8 @@ export const Security = () => {
 
       </div>
       <div className={styles.btn_container}>
-        <button className={styles.btn_back}>Back</button>
-        <button className={styles.btn_add} onClick={() => navigate('/review')}>
+        <button className={styles.btn_back} onClick={() => navigate('/storage')}>Back</button>
+        <button className={styles.btn_add} style={{background: "#007EFF",border: "2px solid #007EFF"}} onClick={() => navigate('/review')}>
           Proceed
         </button>
       </div>
