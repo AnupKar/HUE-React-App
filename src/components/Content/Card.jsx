@@ -7,10 +7,10 @@ export const Card = ({ image }) => {
   const [selected, setSelected] = useState(false);
   const [selectedBit, setSelectedBit] = useState(null);
   const { region, handleSetImages, handleNavChange } = useContext(HvcContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSelection = () => {
-    setSelected(prev => !prev);
+    setSelected((prev) => !prev);
 
     // handle select
     const selectImgBit = {
@@ -18,23 +18,17 @@ export const Card = ({ image }) => {
       name: image.name,
       bit: selectedBit || image.bit[0],
       description: image.description,
-      type: "image"
-    }
+      type: 'image',
+    };
     handleSetImages(selectImgBit);
     handleNavChange(2);
     navigate('/instance');
   };
 
   const changeBit = (bit) => {
-    // if(selected) {
-    //   const res = window.confirm('Are you sure you want to change the Bit?');
-    //   console.log("res", res)
-    //   if(res === true) {
-        setSelectedBit(bit);
-        setSelected(prev => !prev);
-      // }
-    // }
-  }
+    setSelectedBit(bit);
+    setSelected((prev) => !prev);
+  };
 
   return (
     <div className={styles.card}>

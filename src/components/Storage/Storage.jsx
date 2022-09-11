@@ -16,6 +16,7 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
   const [encryption, setEncryption] = useState(true);
   const [backup, setBackup] = useState(isBackup || false);
   const [storageType, setStorageType] = useState(null);
+  const [remarks, setRemarks] = useState('');
 
   useEffect(() => {
     if (capacity.value < 100) {
@@ -30,14 +31,16 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
   const handleStroageSelect = (id) => {
     setStorageType(storageData[id]);
 
-    if(capacity.value) {
-      handleStorage(storageData[id], capacity, card_id, isExt, encryption, backup, IOPS);
+    if (capacity.value) {
+      handleStorage(storageData[id], capacity, card_id, isExt, encryption, backup, IOPS, remarks);
     }
 
+    // ID 0 means SSD
     if (id === 0) {
       setCapacity({ ...capacity, min: 20, max: 512 });
       return;
     }
+    // ID 1 means Mag Disk
     if (id === 1) {
       setCapacity({ ...capacity, min: 40, max: 2048 });
     }
@@ -61,7 +64,7 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
       <div className={styles.volume}>
         <p>Volume</p>
         <div>
-          <p>{!isExt ? "Root" : "Ext"}</p>
+          <p>{!isExt ? 'Root' : 'Ext'}</p>
         </div>
       </div>
 
@@ -73,8 +76,8 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
             value={capacity.value}
             onChange={(e) => {
               const val = e.target.value;
-              if (val) setCapacity({ ...capacity, value: parseInt(e.target.value, 10) });
-              else setCapacity('');
+              if (val.trim().length) setCapacity({ ...capacity, value: parseInt(e.target.value, 10) });
+              else setCapacity({...capacity, value: ''});
             }}
             disabled={capacity.min === 0 && capacity.max === 0}
             onBlur={() => {
@@ -84,7 +87,7 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
                 return;
               }
               // add this to cart item
-              handleStorage(storageType, capacity, card_id, isExt, encryption, backup, IOPS);
+              handleStorage(storageType, capacity, card_id, isExt, encryption, backup, IOPS, remarks);
             }}
           />
         </div>
@@ -114,7 +117,15 @@ const Card = ({ isBackup = false, isExt = false, card_id }) => {
       <div className={styles.capacity}>
         <p>Remarks</p>
         <div>
-          <input type="text" />
+          <input
+            type="text"
+            value={remarks}
+            onChange={(e) => {
+              const newRemark = e.target.value;
+              handleStorage(storageType, capacity, card_id, isExt, encryption, backup, IOPS, newRemark);
+              setRemarks(newRemark);
+            }}
+          />
         </div>
       </div>
     </div>
@@ -125,7 +136,7 @@ export const Storage = () => {
   const [addStorage, setStorage] = useState([]);
   const [count, setCount] = useState(1);
   const { handleNavChange } = useContext(HvcContext);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const handleAddStroage = () => {
     setStorage((prev) => [...prev, count]);
     setCount((prev) => prev + 1);
@@ -139,39 +150,41 @@ export const Storage = () => {
   const handleNext = () => {
     handleNavChange(4);
     navigate('/security');
-  }
+  };
   const handleBack = () => {
     handleNavChange(2);
     navigate('/instance');
-  }
+  };
 
   return (
     <>
       <div className={styles.card_main}>
-      <Card isBackup={true} isExt={false} card_id={0} />
+        <Card isBackup={true} isExt={false} card_id={0} />
 
-      {addStorage !== null &&
-        addStorage.map((each, index) => {
-          return (
-            <div className={styles.otherStroages} key={each}>
-              <Card isExt={true} card_id={each} />
-              <button onClick={() => removeStroage(index )} className={styles.btn_cancel}>X</button>
-            </div>
-          );
-        })}
-    </div>
-    <button onClick={handleAddStroage} className={styles.btn_add}>Add</button>
-        <div className={styles.Button_main}>
-          <div className={styles.btn_back} onClick={handleBack}>
-            <p>Back</p>
-          </div>
-          <div className={styles.btn} onClick={handleNext}>
-            <p>Proceed</p>
-          </div>
+        {addStorage !== null &&
+          addStorage.map((each, index) => {
+            return (
+              <div className={styles.otherStroages} key={each}>
+                <Card isExt={true} card_id={each} />
+                <button onClick={() => removeStroage(index)} className={styles.btn_cancel}>
+                  X
+                </button>
+              </div>
+            );
+          })}
+      </div>
+      <button onClick={handleAddStroage} className={styles.btn_add}>
+        Add
+      </button>
+      <div className={styles.Button_main}>
+        <div className={styles.btn_back} onClick={handleBack}>
+          <p>Back</p>
         </div>
-        
+        <div className={styles.btn} onClick={handleNext}>
+          <p>Proceed</p>
+        </div>
+      </div>
     </>
-    
   );
 };
 

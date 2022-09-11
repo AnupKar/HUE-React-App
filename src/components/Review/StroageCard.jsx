@@ -3,8 +3,6 @@ import styles from '../Storage/Storage.module.css';
 import { Dropdown } from '../Dropdown/Dropdown';
 
 export const StorageCard = ({ data }) => {
-  console.log(data);
-
   return (
     <div className={styles.wrapper}>
       <div>
@@ -16,7 +14,7 @@ export const StorageCard = ({ data }) => {
             onSelect={() => {}}
             width="140px"
             height="30px"
-            isDefault={data.type}
+            isDefault={data.name}
           />
         </div>
       </div>
@@ -59,7 +57,7 @@ export const StorageCard = ({ data }) => {
       <div className={styles.capacity}>
         <p>Remarks</p>
         <div>
-          <input type="text" />
+          <input type="text" value={data.remarks} onChange={() => {}}  disabled/>
         </div>
       </div>
     </div>

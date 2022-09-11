@@ -28,40 +28,11 @@ export const HvcProvider = ({ children }) => {
     } else setImages((prev) => [image, ...prev]);
   };
 
-  const handleSetInstance = (data, type) => {
-    const item = images.filter((each) => each.name.toLowerCase() === type.toLowerCase());
-
-    if (item.length > 0) {
-      const dataIndx = images.findIndex((each) => each.id === item[0].id);
-      const newData = [...images];
-      if (dataIndx > -1) {
-        newData.splice(dataIndx, 1);
-        newData.push({
-          type: "instance",
-          id: data.id,
-          name: type === 'cpu' ? 'Cpu' : 'Memory',
-          bit: {
-            name: data.name,
-            price: data.price,
-          },
-        });
-        setImages(newData);
-      }
-    } else {
-      const newData = {
-        type: "instance",
-        id: data.id,
-        name: type === 'cpu' ? 'Cpu' : 'Memory',
-        bit: {
-          name: data.name,
-          price: data.price,
-        },
-      };
-      setImages((prev) => [...prev, newData]);
-    }
+  const handleSetInstance = (data) => {
+    setImages(prev => [...prev, ...data]);
   };
 
-  const handleStorage = (storageType, capacity, id, isExt, encryption, backup, IOPS) => {
+  const handleStorage = (storageType, capacity, id, isExt, encryption, backup, IOPS, remarks) => {
     const indx = images.findIndex((each) => each?.id === id && each?.type !== "image" && each?.type !== "instance");
 
     if (indx > -1) {
@@ -85,6 +56,7 @@ export const HvcProvider = ({ children }) => {
       encryption, 
       backup,
       IOPS,
+      remarks,
       bit: {
         name: `${capacity.value} GB`,
         price: !isExt

@@ -113,67 +113,69 @@ export const Security = () => {
 
   return (
     <>
-      <div className={styles.typeSelect}>
-        {selectOperation.map((val, index) => {
-          return (
-            <div key={val.id}>
-              <input
-                type="radio"
-                value={val.value}
-                name="securitySelect"
-                onChange={(_) => {
-                  resetSecurity();
-                  setSsecurityState(index);
-                }}
-              />
-              <label>{val.value}</label>
-            </div>
-          );
-        })}
-      </div>
-
-      {securityState === 0 && <p className={styles.text_style}>New Security Group</p>}
-      {securityState === 1 && <p className={styles.text_style}>Select Exiting SecurityGroup</p>}
-
-      <div className={styles.dropdown}>
-        {securityState === 0 && (
-          <>
-            <input type="text" placeholder={selectOperation[securityState].value} className={styles.type_field} />
-            <Card data={networksType} isDefault={false} id={0} />
-
-            {newSecurities.length
-              ? newSecurities.map((each) => {
-                  return <Card key={each} data={networksType} isDefault={false} id={count} />;
-                })
-              : null}
-
-            <button onClick={handleAddNewSecurities}>Add Rule</button>
-          </>
-        )}
-        {securityState === 1 && (
-          <Dropdown
-            width="300px"
-            height="30px"
-            data={securityData}
-            placeholder="Security Group"
-            onSelect={handleAddExistingSecurity}
-          />
-        )}
-      </div>
-
-      {securityState === 1 && (
-        <div className={styles.cards}>
-          {exSecurities.length > 0 &&
-            exSecurities.map((each) => {
-              return each.rules.map((rule, index) => {
-                return <Card key={index} data={rule} id={rule.id} />;
-              });
-            })}
+      <div className={styles.wrapper_main}>
+        <div className={styles.typeSelect}>
+          {selectOperation.map((val, index) => {
+            return (
+              <div key={val.id}>
+                <input
+                  type="radio"
+                  value={val.value}
+                  name="securitySelect"
+                  onChange={(_) => {
+                    resetSecurity();
+                    setSsecurityState(index);
+                  }}
+                />
+                <label>{val.value}</label>
+              </div>
+            );
+          })}
         </div>
-      )}
 
+        {securityState === 0 && <p className={styles.text_style}>New Security Group</p>}
+        {securityState === 1 && <p className={styles.text_style}>Select Exiting SecurityGroup</p>}
+
+        <div className={styles.dropdown}>
+          {securityState === 0 && (
+            <>
+              <input type="text" placeholder={selectOperation[securityState].value} className={styles.type_field} />
+              <Card data={networksType} isDefault={false} id={0} />
+
+              {newSecurities.length
+                ? newSecurities.map((each) => {
+                    return <Card key={each} data={networksType} isDefault={false} id={count} />;
+                  })
+                : null}
+
+              <button onClick={handleAddNewSecurities}>Add Rule</button>
+            </>
+          )}
+          {securityState === 1 && (
+            <Dropdown
+              width="300px"
+              height="30px"
+              data={securityData}
+              placeholder="Security Group"
+              onSelect={handleAddExistingSecurity}
+            />
+          )}
+        </div>
+
+        {securityState === 1 && (
+          <div className={styles.cards}>
+            {exSecurities.length > 0 &&
+              exSecurities.map((each) => {
+                return each.rules.map((rule, index) => {
+                  return <Card key={index} data={rule} id={rule.id} />;
+                });
+              })}
+          </div>
+        )}
+
+      </div>
       <div className={styles.btn_container}>
-        <button className={styles.btn_add}>Back</button>
+        <button className={styles.btn_back}>Back</button>
         <button className={styles.btn_add} onClick={() => navigate('/review')}>
           Proceed
         </button>

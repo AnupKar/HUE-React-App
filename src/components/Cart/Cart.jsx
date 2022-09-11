@@ -6,7 +6,7 @@ import { HvcContext } from '../../context';
 const calculatePrice = (images) => {
   let total = 0;
   images.forEach((image) => {
-    total += parseInt(image.bit.price, 10);
+    total += Number(image.bit.price);
   });
   return total;
 }

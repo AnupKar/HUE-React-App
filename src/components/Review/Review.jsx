@@ -3,10 +3,13 @@ import { HvcContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
 import { StorageCard } from './StroageCard';
 import { Card as SecurityCard } from '../Security/Security';
-
+import styles from '../Content/Card.module.css';
+import style from './Review.module.css';
 export const Review = () => {
   const { images, instenceType, securities, handleNavChange } = useContext(HvcContext);
   const navigate = useNavigate();
+
+  console.log("image", images);
 
   const IMAGE = images[0];
 
@@ -20,51 +23,115 @@ export const Review = () => {
   if (!images.length) {
     return null;
   }
-
-  console.log('securities', securities);
-
+  const generateJSON = () => {
+    let obj = {
+      image: IMAGE,
+      'instance type': instenceType,
+      'cpu type': images[1].bit.name,
+      'cpu price': images[1].bit.price,
+      'memory capacity': images[2].name,
+      'memory price': images[2].bit.price,
+      security: securities,
+    };
+    console.log('IMAGE', obj);
+    const fileName = 'HVC_VM_config';
+    const json = JSON.stringify(obj, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const href = URL.createObjectURL(blob);
+    // create "a" HTLM element with href to file
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = fileName + '.json';
+    document.body.appendChild(link);
+    link.click();
+    // clean up "a" element & remove ObjectURL
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
+  };
   return (
-    <div>
-      <div>
-        <div>
-          <h3> IMAGE </h3> <p>Edit</p>{' '}
+    <>
+      <div className={style.review_main_container}>
+        <button onClick={generateJSON} className={style.generate_btn}>
+          Generate JSON
+        </button>
+        <div style={{ width: '95%' }}>
+          <div className={style.heading}>
+            <p className={style.Image_heading}>Image</p>
+            <span className={style.edit_span}>EDIT</span>
+          </div>
+          <div>
+            <div className={styles.card}>
+              <div className={styles.leftSide}>
+                {/* image */}
+                <div className={styles.image} />
+
+                {/* title and description */}
+                <div className={styles.details}>
+                  <p>{IMAGE.name}</p>
+                  <p>{IMAGE.description}</p>
+                </div>
+              </div>
+              <div className={styles.selection}>
+                <p>{IMAGE.bit.name}</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div>
-          <h4>{IMAGE.name}</h4>
-          <p>{IMAGE.description}</p>
-          <p>{IMAGE.bit.name}</p>
+          <div>
+            <p className={style.Image_heading}>Instance</p>
+          </div>
+          <div>
+            <div className={style.card}>
+              <div className={styles.leftSide}>
+                {/* image */}
+
+                {/* title and description */}
+                <div className={styles.details}>
+                  <p>{instenceType}</p>
+                  <p>
+                    {images[1].name} - {images[1].bit.name}
+                  </p>
+                  <p>
+                    {images[2].name} - {images[2].bit.name}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <p className={style.Image_heading}>Storage</p>
+          </div>
+          <div>
+            {images.slice(3).map((each) => {
+              return <StorageCard key={each.id} data={each} />;
+            })}
+          </div>
+        </div>
+        <div>
+          <div>
+            <p className={style.Image_heading}>Security Groups</p>
+          </div>
+          <div>
+            {securities.map((each) => {
+              return <SecurityCard key={each.id} data={each} isDefault={true} id={each.id} isShow={true} />;
+            })}
+          </div>
         </div>
       </div>
-      <div>
-        <div>
-          <h3> Instance </h3> <p>Edit</p>{' '}
+      <div className={style.Button_main}>
+        <div className={style.btn_cancel}>
+          <p>Cancel</p>
         </div>
-        <div>
-          {instenceType}
-          {images[1].name} - {images[1].bit.name}
-          {images[2].name} - {images[2].bit.name}
+        <div className={style.btn_back}>
+          <p>Back</p>
         </div>
-      </div>
-      <div>
-        <div>
-          <h3> Storage </h3> <p>Edit</p>{' '}
-        </div>
-        <div>
-          {images.slice(3).map((each) => {
-            return <StorageCard key={each.id} data={each} />;
-          })}
+        <div className={style.btn}>
+          <p>Launch</p>
         </div>
       </div>
-      <div>
-        <div>
-          <h3> Security Groups </h3> <p>Edit</p>{' '}
-        </div>
-        <div>
-          {securities.map((each) => {
-            return <SecurityCard key={each.id} data={each} isDefault={true} id={each.id} isShow={true} />;
-          })}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
