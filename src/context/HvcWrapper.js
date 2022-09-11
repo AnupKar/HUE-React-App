@@ -76,7 +76,7 @@ export const HvcProvider = ({ children }) => {
       setSecurity((prev) => [...prev, data]);
     }
   }, [securities]);
-
+  //console.log("securities",securities);
   const resetSecurity = () => {
     setSecurity([]);
   }
