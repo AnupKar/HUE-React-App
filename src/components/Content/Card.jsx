@@ -68,10 +68,10 @@ export const Card = ({ image }) => {
           )}
         </div>
         <div
-          className={`${styles.btn} ${!selected ? styles.selectBtn : styles.alreadySelected}`}
+          className={`${styles.btn} ${ styles.selectBtn }`}
           onClick={handleSelection}
         >
-          <p>{!selected ? 'Select' : 'Selected'}</p>
+          <p>Select</p>
         </div>
       </div>
     </div>

@@ -78,6 +78,7 @@ describe('<Review />', () => {
   window.URL.createObjectURL = jest.fn();
   window.URL.revokeObjectURL = jest.fn();
 
+  // clean up function for good practice
   afterEach(() => {
     window.URL.createObjectURL.mockReset();
     window.URL.revokeObjectURL.mockReset();

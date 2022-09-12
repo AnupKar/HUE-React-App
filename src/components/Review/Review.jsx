@@ -19,7 +19,7 @@ export const Review = () => {
       handleNavChange(1);
       navigate('/card');
     }
-  }, [images]);
+  }, [images, handleNavChange, navigate]);
 
   if (!images.length) {
     return null;
@@ -52,7 +52,7 @@ export const Review = () => {
     // clean up "a" element & remove ObjectURL
     document.body.removeChild(link);
     URL.revokeObjectURL(href);
-  };
+  }
 
   const toggleModal = () => {
     setSuccess(prev => !prev);
