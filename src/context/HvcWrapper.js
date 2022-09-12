@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 
 export const HvcContext = React.createContext();
 
@@ -9,10 +9,13 @@ export const HvcProvider = ({ children }) => {
   const [securities, setSecurity] = useState([]);
   const [instenceType, setInstance] = useState("");
 
-  const handleNavChange = (id) => {
+  // infinite loop happens, if we don't use useCallback.
+  // useCallback memorize the function to prevent re render.
+  // it has no dependency, means it has no side effect. ( not change on state updates, only run when call by someone)
+  const handleNavChange = useCallback((id) => {
     if (id < 1 || id > 5) return;
     setNavId(id);
-  };
+  }, []);
 
   const handleSelectRegion = (region) => {
     selectedRegion(region);
